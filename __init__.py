@@ -1,9 +1,11 @@
 import os
 import sys
+import json
+from . import db
 
 sys.path.append("Soara/")
 
-from flask import Flask
+from flask import Flask, jsonify
 from config import Config
 # from flask_sqlalchemy import SQLAlchemy
 
@@ -12,14 +14,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     app.config.from_object(Config)
     app.secret_key = os.getenv("SECRET_KEY")
-
-    # db = SQLAlchemy(app)
-
-    # app = Flask(__name__, instance_relative_config=True)
-    # app.config.from_mapping(
-    #     SECRET_KEY='dev',
-    #     DATABASE=os.path.join(app.instance_path, 'Soara.sqlite'),
-    # )
+    db.init_app(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -28,17 +23,35 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
-    # # ensure the instance folder exists
-    # try:
-    #     os.makedirs(app.instance_path)
-    # except OSError:
-    #     pass
+    # ensure the instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+    # flask --app flaskr init-db
+    # flask --app Soara --debug run
 
-    # a simple page that says hello
+    # a simple page that says hi
     @app.route('/hello')
-    def hello():
-        print(app.config)
-        print(app.secret_key)
-        return 'Hello, World!'
+    def hi():
+        return 'Hi!'
+
+    @app.route('/search/q=<string:q>', methods=['GET'])
+    # protect against injections: https://github.com/TryGhost/node-sqlite3/issues/57
+    def search_corpus(q):
+        cursor = db.get_db()
+        count = cursor.execute(
+        'SELECT COUNT(*) FROM corpus WHERE text LIKE ?;',
+        ('% '+q+' %',)).fetchone()
+
+        result = cursor.execute(
+        'SELECT text FROM corpus WHERE text LIKE ? ORDER BY RANDOM() LIMIT 10;', 
+        ('% '+q+' %',)).fetchall()
+        result = [tuple(row) for row in result]
+        result.append(tuple(count))
+        db.close_db()
+        return jsonify(result)
+
+    # adding regexp implementation: https://github.com/thomasnield/oreilly_intermediate_sql_for_data/issues/5
 
     return app

@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 # load_dotenv(os.path.join(basedir, '../.env'))
 load_dotenv()
@@ -9,9 +10,9 @@ def main():
     print(os.urandom(24).hex())
 
 class Config(object):
-    # ...
-    DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'soara.sqlite')
+    # print(os.path.join(basedir, 'soara.sqlite'))
+    DATABASE = os.environ.get('DATABASE_URL') or \
+        os.path.join(basedir, 'soara.sqlite')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'soara.sqlite')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
