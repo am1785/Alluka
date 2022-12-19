@@ -18,8 +18,10 @@ def create_app(test_config=None):
     app.secret_key = os.getenv("SECRET_KEY")
     api = Api(app)
     db.init_app(app)
-    from . import auth
+    from . import auth, search
     app.register_blueprint(auth.bp)
+    app.register_blueprint(search.bp)
+    app.add_url_rule('/', endpoint='index')
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -40,10 +42,11 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hi():
         return 'Hi!'
-    @app.route('/')
-    @login_required
-    def index():
-        return render_template('index.html')
+
+    # @login_required
+    # @app.route('/index')
+    # def index():
+    #     return render_template('index.html')
 
 # restful implementation of Flask API
 
@@ -70,28 +73,28 @@ def create_app(test_config=None):
     # api.add_resource(SearchResult, "/search/q=<string:q>&r=<int:random>")
 
     # NATIVE implementation of REST API
-    @login_required
-    @app.route('/search/q=<string:q>&r=<int:random>', methods=['GET'])
-    # protect against injections: https://github.com/TryGhost/node-sqlite3/issues/57
-    def search_corpus(q, random):
-        cursor = db.get_db()
-        select_query = 'SELECT COUNT(*) FROM corpus WHERE text LIKE ?;'
-        count = cursor.execute(
-        select_query,
-        ('% '+q+' %',)).fetchone()
+    # @login_required
+    # @app.route('/search/q=<string:q>&r=<int:random>', methods=['GET'])
+    # # protect against injections: https://github.com/TryGhost/node-sqlite3/issues/57
+    # def search_corpus(q, random):
+    #     cursor = db.get_db()
+    #     select_query = 'SELECT COUNT(*) FROM corpus WHERE text LIKE ?;'
+    #     count = cursor.execute(
+    #     select_query,
+    #     ('% '+q+' %',)).fetchone()
 
-        if random==1:
-            select_query = 'SELECT text FROM corpus WHERE text LIKE ? ORDER BY RANDOM() LIMIT 10;'
-        else:
-            select_query = 'SELECT text FROM corpus WHERE text LIKE ? LIMIT 10;'
+    #     if random==1:
+    #         select_query = 'SELECT text FROM corpus WHERE text LIKE ? ORDER BY RANDOM() LIMIT 10;'
+    #     else:
+    #         select_query = 'SELECT text FROM corpus WHERE text LIKE ? LIMIT 10;'
 
-        result = cursor.execute(
-        select_query,
-        ('% '+q+' %',)).fetchall()
-        result = [tuple(row) for row in result]
-        result.append(tuple(count))
-        db.close_db()
-        return jsonify(result)
+    #     result = cursor.execute(
+    #     select_query,
+    #     ('% '+q+' %',)).fetchall()
+    #     result = [tuple(row) for row in result]
+    #     result.append(tuple(count))
+    #     db.close_db()
+    #     return jsonify(result)
 
     # adding regexp implementation: https://github.com/thomasnield/oreilly_intermediate_sql_for_data/issues/5
 

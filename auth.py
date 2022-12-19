@@ -9,7 +9,7 @@ from Soara.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-'''https://flask.palletsprojects.com/en/2.2.x/tutorial/views/'''
+# https://flask.palletsprojects.com/en/2.2.x/tutorial/views/
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():

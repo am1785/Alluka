@@ -5,10 +5,30 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post">
+<section class="searchBar">
+<form method="post">
     <label for="query">Query</label>
     <input name="query" id="query" required>
+    <label for="random">randomize</label>
+    <input type="checkbox" name="random" value="random" checked>
     <input type="submit" value="Search">
   </form>
+</section>
+
+<section class="results">
+    {% for result in results %}
+    <article class="result">
+      <header>
+        <div>
+          <h3>{{ result[0] }}</h3>
+        </div>
+      </header>
+      <p class="body">{{ result[1] }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+</section>
   <!-- <span>search over 10,000 high quality video transcriptions</span> -->
 {% endblock %}
