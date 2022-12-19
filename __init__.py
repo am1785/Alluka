@@ -5,7 +5,7 @@ from . import db
 
 sys.path.append("Soara/")
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, redirect, render_template
 from flask_restful import Api, Resource
 from config import Config
 # from flask_sqlalchemy import SQLAlchemy
@@ -17,6 +17,8 @@ def create_app(test_config=None):
     app.secret_key = os.getenv("SECRET_KEY")
     api = Api(app)
     db.init_app(app)
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -37,6 +39,10 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hi():
         return 'Hi!'
+
+    @app.route('/index')
+    def index():
+        return render_template('index.html')
 
 # restful implementation of Flask API
 

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Sentence Search Engine{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="query">Query</label>
+    <input name="query" id="query" required>
+    <input type="submit" value="Search">
+  </form>
+  <!-- <span>search over 10,000 high quality video transcriptions</span> -->
+{% endblock %}
