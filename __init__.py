@@ -5,7 +5,7 @@ from . import db
 
 sys.path.append("Soara/")
 
-from flask import Flask, jsonify, redirect, render_template
+from flask import Flask, jsonify, redirect, render_template, url_for
 from flask_restful import Api, Resource
 from config import Config
 from Soara.auth import login_required

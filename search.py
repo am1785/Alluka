@@ -14,6 +14,7 @@ soara_endpoint = "http://127.0.0.1:5000/"
 @bp.route('/search/q=<string:q>&o=<string:random>', methods=['GET'])
 def search_corpus(q, random):
     if request.method == 'GET':
+        q = q.strip()
         cursor = get_db()
         select_query = 'SELECT COUNT(*) FROM corpus WHERE text LIKE ?;'
         count = cursor.execute(
@@ -36,8 +37,8 @@ def search_corpus(q, random):
         return result
     # return render_template('index.html')
 
-# @login_required
 @bp.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     results = [("No results", "0 results returned")]
     if request.method == 'POST':
