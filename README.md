@@ -1,5 +1,5 @@
 # Soara
-an English expressions search web application catered towards language learners built using flask, sqlite, reactJS, and data scoured from online videos (YouTube).
+a lightweight English expressions search web application catered towards language learners built using flask, sqlite, JS, and data scoured from online videos (YouTube).
 
 ## Getting Started
 
