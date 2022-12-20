@@ -8,7 +8,7 @@ a lightweight English expressions search web application catered towards languag
 
 `pip install -r requirements.txt`
 
-### Change Config.py DB File Location
+### Change `config.py` DB File Location
 Line 14 -> `DATABASE = os.environ.get('DATABASE_URL') or \os.path.join(basedir, 'demo/soara.sqlite')`
 
 ### Initialize Database
