@@ -24,9 +24,9 @@ def search_corpus(q, random):
         print(count)
 
         if random=='random':
-            select_query = 'SELECT channel, text FROM corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text LIKE ? ORDER BY RANDOM() LIMIT 10;'
+            select_query = 'SELECT channel, text, videos.vid, CAST(timestamp as INTEGER) FROM corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text LIKE ? ORDER BY RANDOM() LIMIT 10;'
         else:
-            select_query = 'SELECT channel, text FROM corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text LIKE ? LIMIT 10;'
+            select_query = 'SELECT channel, text, videos.vid, CAST(timestamp as INTEGER) FROM corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text LIKE ? LIMIT 10;'
 
         result = cursor.execute(
         select_query,

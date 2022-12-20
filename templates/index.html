@@ -29,6 +29,9 @@
         </div>
       </header>
       <p class="resultText">{{ result[1] }}</p>
+      {% if not loop.last %}
+      <a class="resultLink" href= {{ "https://youtu.be/" ~ result[2] ~ "?t=" ~ result[3] }}>Link to Clip</a>
+      {% endif %}
     </article>
     {% if not loop.last %}
       <hr>
