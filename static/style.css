@@ -24,12 +24,12 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 .content textarea { min-height: 12em; resize: vertical; }
 input.danger { color: #cc2f2e; }
 /* input[type=submit] { align-self: start; min-width: 10em; } */
-.siteIcon {margin-top: 6px; border-radius: 5px;}
+.siteIcon {margin-top: 5px; border-radius: 5px;}
 span.highlight {color:#377ba8; font-weight: bold;}
 #pageNo {min-height: 37.5px; max-width: 45px; margin-bottom: 0.5em; position:relative; bottom: -3px;}
 input#pageGo {height: 30px; max-width: 45px; position:relative; bottom: -2.5px;}
 .pageButton{min-height: 40px; min-width: 40px; margin: 0 5px 0 5px;}
-nav h1{height: 1.5em;}
+nav h1{height: 55px;}
 header h1{font-size: 1.5em;}
 .col{padding-left:7.5px; padding-right: 7.5px;}
 footer{background-color: #377ba8; color:white; font-weight:600; padding-top: 1rem;}
