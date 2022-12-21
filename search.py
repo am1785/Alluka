@@ -1,4 +1,5 @@
 import requests
+import math
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
@@ -8,11 +9,12 @@ from Soara.auth import login_required
 from Soara.db import get_db
 
 bp = Blueprint('search', __name__)
-soara_endpoint = "http://127.0.0.1:5000/"
+# soara_endpoint = "http://127.0.0.1:5000/"
 
 @login_required
-@bp.route('/search/q=<string:q>&o=<string:random>', methods=['GET'])
-def search_corpus(q, random):
+@bp.route('/search/<string:q>/<int:page>', methods=['GET', 'POST'])
+def search_corpus(q, page):
+    # print(request.args.get('string:q'))
     if request.method == 'GET':
         q = q.strip()
         cursor = get_db()
@@ -20,22 +22,29 @@ def search_corpus(q, random):
         count = cursor.execute(
         select_query,
         ('% '+q+' %',)).fetchone()
-        count = str(tuple(count)[0]) + " Total Results for \'" + q + "\'."
-        print(count)
+        total_pages = int(math.ceil(int(tuple(count)[0]) / 30 + 0.01))
+        pages = list(range(1, total_pages+1))
 
-        if random=='random':
-            select_query = 'SELECT channel, text, videos.vid, CAST(timestamp as INTEGER) FROM corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text LIKE ? ORDER BY RANDOM() LIMIT 10;'
-        else:
-            select_query = 'SELECT channel, text, videos.vid, CAST(timestamp as INTEGER) FROM corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text LIKE ? LIMIT 10;'
+        print(f"total pages: {total_pages}")
+        count = str(tuple(count)[0]) + " Total Results for \'" + q + "\'."
+        offset = (page-1) * 30
+
+        select_query = 'SELECT channel, text, videos.vid, CAST(timestamp as INTEGER) FROM corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text LIKE ? LIMIT 30 OFFSET ?;'
 
         result = cursor.execute(
         select_query,
-        ('% '+q+' %',)).fetchall()
+        ('% '+q+' %', offset,)).fetchall()
         result = [tuple(row) for row in result]
         result.append([count])
         cursor.close()
-        return result
-    # return render_template('index.html')
+
+    if request.method == 'POST':
+        query = request.form['query']
+        page = 1
+        if request.form.get('page_no'):
+            page = request.form['page_no']
+        return redirect(url_for("search.search_corpus", q=query, page=page))
+    return render_template('index.html', results = result, pages = pages, params = q)
 
 @bp.route('/', methods=['GET', 'POST'])
 @login_required
@@ -43,11 +52,7 @@ def index():
     results = [("No results", "0 results returned")]
     if request.method == 'POST':
         query = request.form['query']
-        random = 'fixed'
-        if request.form.get('random'):
-            random = request.form['random']
-        # results = search_corpus(q=query, random=random)
-        results = requests.get(soara_endpoint+"search/q="+query+"&o="+random).json()
+        page = 1
+        return redirect(url_for("search.search_corpus", q=query, page=page))
 
-
-    return render_template('index.html', results=results)
+    return render_template('index.html', results = results)

@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Videos Sentence Search Engine{% endblock %}</h1>
+  <h1>{% block title %}English Corpus Search Engine{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 <section class="searchBar">
 <form id="searchForm" method="post">
-    <label for="query">Query</label>
+    <h3>Query</h3>
     <input name="query" id="query" required>
-    <label for="random">randomize</label>
-    <input type="checkbox" name="random" value="random" checked>
     <input type="submit" value="Search">
   </form>
 </section>
@@ -37,6 +35,27 @@
       <hr>
     {% endif %}
   {% endfor %}
+  <hr>
+  {% if pages|length < 7 %}
+  {% for page in pages %}
+  <a class = "btn btn-primary" href={{ url_for("search.search_corpus", q=params, page=page) }}>{{ page }}</a>
+  {% endfor %}
+  {% endif %}
+  {% if pages|length > 6 %}
+  <div class="container text-center" >
+    <div class="row align-items-baseline">
+      <div class="col"><a class = "btn btn-primary" href={{ url_for("search.search_corpus", q=params, page=pages[0]) }}>{{ pages[0] }}</a></div>
+      <div class="col"><a class = "btn btn-primary" href={{ url_for("search.search_corpus", q=params, page=pages[1]) }}>{{ pages[1] }}</a></div>
+      <div class="col justify"><form class="align-items-center" method = "POST">
+        <input type="number" required name="page_no" id="pageNo" min="1" max={{ pages[-1] }} />
+        <input type="hidden" name="query" value={{ params }} />
+        <input type="submit" name="submit" id="pageGo" value="go" />
+      </form></div>
+      <div class="col"><a class = "btn btn-primary" href={{ url_for("search.search_corpus", q=params, page=pages[-2]) }}>{{ pages[-2] }}</a></div>
+      <div class="col"><a class = "btn btn-primary" href={{ url_for("search.search_corpus", q=params, page=pages[-1]) }}>{{ pages[-1] }}</a></div>
+    </div>
+  </div>
+  {% endif %}
 </section>
   <!-- <span>search over 10,000 high quality video annotations</span> -->
 {% endblock %}

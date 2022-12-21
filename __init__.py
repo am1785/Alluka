@@ -38,11 +38,6 @@ def create_app(test_config=None):
     # flask --app Soara init-db
     # flask --app Soara --debug run
 
-    # a simple page that says hi
-    @app.route('/hello')
-    def hi():
-        return 'Hi!'
-
     # @login_required
     # @app.route('/index')
     # def index():

@@ -1,7 +1,8 @@
 <!doctype html>
 <title>{% block title %}{% endblock %} - Soara</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous" />
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <script async type="module" src="{{ url_for('static', filename='DOMPurify-2.4.1/dist/purify.min.js') }}"></script>
 <script async src="{{url_for('static', filename='search.js')}}"></script>
 <nav>
