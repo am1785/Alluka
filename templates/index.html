@@ -14,13 +14,15 @@
 </section>
 
 <section class="results">
+    <h3 class="resultCount">{{ results[-1][0] }}</h3>
+    <hr>
     {% for result in results %}
     <article class="result">
       <header>
         <div>
-          {% if loop.last %}
+          <!-- {% if loop.last %}
           <h3 class="resultCount">{{ result[0] }}</h3>
-          {% endif %}
+          {% endif %} -->
           {% if not loop.last %}
           <h3 class="resultChannel">{{ result[0] }}</h3>
           {% endif %}
@@ -35,7 +37,6 @@
       <hr>
     {% endif %}
   {% endfor %}
-  <hr>
   {% if pages|length < 7 %}
   {% for page in pages %}
   <a class = "btn btn-primary" href={{ url_for("search.search_corpus", q=params, page=page) }}>{{ page }}</a>
