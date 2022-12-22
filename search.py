@@ -30,23 +30,25 @@ def search_corpus(q, page):
             # Method: 2 pass regex filtering (Query + POS)
             # q = Hello \w+ my name is \w+
             # pos = \w+ PRON \w+ \w+ NOUN
+            pos_count = 0
             all_pos = ['NOUN','PRON','ADJ','VERB','ADV','ADP','PRT','DET','CONJ','NUM']
             print("GRAMMAR SEARCH:")
             print(f"plain q: {q}")
             # pos_exp = re.findall(r'\<(.*?)\>', q)
             q_tmp = re.findall(r'[a-zA-Z0-9]+', q)
             pos = []
-            print(q)
             for i,v in enumerate(q_tmp):
                 if v in all_pos:
                     q_tmp[i] = "[a-zA-Z0-9]+"
                     pos.append(v)
+                    pos_count += 1
                 else:
                     pos.append("[A-Z.]+")
-            q = " ".join(q_tmp)
+            if pos_count == len(q_tmp):
+                q = ".*"
+            else:
+                q = " ".join(q_tmp)
             pos = " ".join(pos)
-            # print(f'q = {q}')
-            # print(f'pos = {pos}')
 
         cursor = get_db()
         cursor.create_function("REGEXP", 2, match)

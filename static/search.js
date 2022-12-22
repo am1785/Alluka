@@ -42,32 +42,32 @@ const conj = document.getElementById('conjBtn');
 const num = document.getElementById('numBtn');
 
 function addNoun(){
-    queryInput.value += "<" + noun.textContent + "> ";
+    queryInput.value += " <" + noun.textContent + "> ";
 }
 function addPron(){
-    queryInput.value += "<" + pron.textContent + "> ";
+    queryInput.value += " <" + pron.textContent + "> ";
 }
 function addAdj(){
-    queryInput.value += "<" + adj.textContent + "> ";
+    queryInput.value += " <" + adj.textContent + "> ";
 }
 function addVerb(){
-    queryInput.value += "<" + verb.textContent + "> ";
+    queryInput.value += " <" + verb.textContent + "> ";
 }
 function addAdv(){
-    queryInput.value += "<" + adv.textContent + "> ";
+    queryInput.value += " <" + adv.textContent + "> ";
 }
 function addAdp(){
-    queryInput.value += "<" + adp.textContent + "> ";
+    queryInput.value += " <" + adp.textContent + "> ";
 }
 function addPrt(){
-    queryInput.value += "<" + prt.textContent + "> ";
+    queryInput.value += " <" + prt.textContent + "> ";
 }
 function addDet(){
-    queryInput.value += "<" + det.textContent + "> ";
+    queryInput.value += " <" + det.textContent + "> ";
 }
 function addConj(){
-    queryInput.value += "<" + conj.textContent + "> ";
+    queryInput.value += " <" + conj.textContent + "> ";
 }
 function addNum(){
-    queryInput.value += "<" + num.textContent + "> ";
+    queryInput.value += " <" + num.textContent + "> ";
 }
