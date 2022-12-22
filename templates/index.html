@@ -91,19 +91,21 @@
     <hr>
     {% for result in results %}
     <article class="result">
-      <header>
-        <div>
-          <!-- {% if loop.last %}
-          <h3 class="resultCount">{{ result[0] }}</h3>
-          {% endif %} -->
-          {% if not loop.last %}
-          <h3 class="resultChannel">{{ result[0] }}</h3>
-          {% endif %}
-        </div>
-      </header>
-      <p class="resultText">{{ result[1] }}</p>
       {% if not loop.last %}
-      <a class="resultLink" href= {{ "https://youtu.be/" ~ result[2] ~ "?t=" ~ result[3] }}>Link to Clip</a>
+      <div class="card">
+        <div class="card-body">
+          <p class="resultText">{{ result[1] }}</p>
+          <div class="container text-center">
+            <div class="row align-items-baseline">
+              <div class="col-2">
+                <a class="resultLink" target="_blank" rel="noopener noreferrer" href= {{ "https://youtu.be/" ~ result[2] ~ "?t=" ~ result[3] }}>Clip </a>
+              </div>
+              <div class="col"><i class="bi-clipboard btn"></i></div>
+              <div class="col-7"><em class="resultChannel">{{ result[0] }}</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
       {% endif %}
     </article>
     {% if not loop.last %}
