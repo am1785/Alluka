@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="https://user-images.githubusercontent.com/25367083/208821632-aad4dc48-c30d-4e5c-91d8-b537c2c5fd1b.png" width="450" height="400"/>
+  <img src="https://user-images.githubusercontent.com/25367083/209227936-86480abd-215b-428d-88b3-53871df52609.png" width="450" height="550"/>
   </p>
 
 a lightweight English expressions search web application catered towards language learners built using flask, sqlite, JS, and data scoured from online videos (YouTube).
