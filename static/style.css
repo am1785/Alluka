@@ -33,3 +33,4 @@ nav h1{height: 55px;}
 header h1{font-size: 1.5em;}
 .col{padding-left:7.5px; padding-right: 7.5px;}
 footer{background-color: #377ba8; color:white; font-weight:600; padding-top: 1rem;}
+span.badge-info{background-color: #ffdab9 ; font-size: 1rem; color:black;}
