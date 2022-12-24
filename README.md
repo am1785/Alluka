@@ -7,7 +7,7 @@ a lightweight English expressions search web application catered towards languag
 ## Getting Started
 
 ### Install dependencies
-> this repo requires `Python 3.7+` to be installed, and maybe having a new `venv` set up.
+> this repo requires `Python 3.7+` to be installed, and it is recommended to have a new `venv` set up.
 
 `pip install -r requirements.txt`
 
