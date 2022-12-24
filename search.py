@@ -63,7 +63,9 @@ def search_corpus(q, page):
         count = str(tuple(count)[0]) + " Total Results for \'" + q_unchanged + "\'."
         offset = (page-1) * 30
 
-        select_query = 'SELECT channel, text, videos.vid, CAST(timestamp as INTEGER) FROM corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text REGEXP ? AND pos REGEXP ? LIMIT 30 OFFSET ?;'
+        select_query = 'SELECT channel, text, videos.vid, CAST(timestamp as INTEGER),'\
+        'row_number() over (order by corpus.ROWID) as r FROM '\
+        'corpus INNER JOIN videos ON corpus.vid = videos.vid WHERE text REGEXP ? AND pos REGEXP ? LIMIT 30 OFFSET ?;'
 
         result = cursor.execute(
         select_query,
