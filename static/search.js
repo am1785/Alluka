@@ -1,4 +1,9 @@
-// const sanitizer1 = new Sanitizer(); // https://developer.mozilla.org/en-US/docs/Web/API/Element/setHTML
+function queryCheck(form){
+    if(form.children[1].value.trim() === ""){
+        alert("Please input non-blank characters");
+       return false;
+    };
+}
 
 function highlightResult(query) {
 // manipulate html output by adding spans and toggling css classes to query text
@@ -6,7 +11,11 @@ var texts = document.getElementsByClassName('resultText');  // the div to change
 // directly using innerHTML creates a vector for CSS attacks by injecting HTML code, using DOMPurify to sanitize input.
 // https://github.com/cure53/DOMPurify
 const pattern = /\<(.*?)\>/ig;
+const doubleSpaces = /  /ig;
 query = query.replaceAll(pattern, '\\w+');
+query = query.replaceAll(doubleSpaces, ' ');
+// query = query.replaceAll(pattern, '[a-zA-Z0-9]+');
+// console.log(query);
 
 Array.from(texts).forEach(element => {
     element.innerHTML = (DOMPurify.sanitize(element.innerHTML.replace(new RegExp('('+ query +')','ig'), '<span class="badge badge-info" >$1</span>')));

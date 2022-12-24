@@ -6,9 +6,9 @@
 
 {% block content %}
 <section class="searchBar">
-  <form id="searchForm" method="post">
+  <form onsubmit="return queryCheck(this)" id="searchForm" method="post">
       <h3>Query</h3>
-      <input name="query" id="query" required>
+      <input name="query" id="query" autofocus required>
       <button style="border: 1px solid #dee2e6;" class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearch" aria-expanded="false" aria-controls="advancedSearch">
         Advanced Filters <i style="color: black;" class="bi bi-filter-circle-fill"></i>
       </button>

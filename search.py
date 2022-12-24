@@ -25,6 +25,8 @@ def search_corpus(q, page):
     if request.method == 'GET':
         pos = ".*" # the pos regex query
         q = q.strip()
+        if q == "":
+            return render_template('index.html', results = [["0 Total Results for \' \'"]], pages = [1], params = q)
         q_unchanged = q
         if match(r'(\<[A-Z]{1,4}\>)|(\<\.\>)', q):
             # Method: 2 pass regex filtering (Query + POS)
